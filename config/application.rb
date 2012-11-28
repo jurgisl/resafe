@@ -58,6 +58,15 @@ module Resafe
 
     config.generators do |g|
       g.test_framework :rspec
+      g.template_engine :haml
+      g.stylesheet_engine :less
+      g.view_specs false
+      g.routing_specs false
+      g.helper false
+      g.helper_specs false
     end
+    
+    # For Heroku on Devise sugesstion
+    config.assets.initialize_on_precompile = false
   end
 end
