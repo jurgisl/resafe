@@ -1,7 +1,7 @@
 def url_of(page)
   case page
     when "login"
-      return "/login"
+      return "/users/login"
     else
       throw "Page URL not found"
   end
