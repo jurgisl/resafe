@@ -19,6 +19,8 @@ end
 group :development do
   gem 'spork-rails'
   gem 'guard-spork'
+  gem 'rb-inotify'
+  gem 'guard-rails'
 end
 
 group :test, :development do
