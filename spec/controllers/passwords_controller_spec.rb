@@ -44,10 +44,26 @@ describe PasswordsController do
   end
 
   describe "GET index" do
+    it "renders with sidebar" do
+      get :index, {}, valid_session
+      response.should render_template "layouts/with_sidebar"
+    end
+    
     it "assigns all passwords as @passwords" do
-      password = FactoryGirl.create :password
+      password = FactoryGirl.create :password, :category => nil
       get :index, {}, valid_session
       assigns(:passwords).should eq([password])
+    end
+    
+    it "filters passwords by category" do
+      Password.should_receive(:all_by_category).with('10')
+      get :index, {:category => '10'}, valid_session
+    end
+    
+    it "assigns category" do
+      category = FactoryGirl.create :category
+      get :index, {:category => category.id}, valid_session
+      assigns(:category).should eq(category)
     end
   end
 

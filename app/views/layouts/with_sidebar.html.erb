@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Resafe</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  
+<div class="navbar navbar-static-top">
+    <div class="navbar-inner">
+  <% if !controller.devise_controller? %>
+      <a class="brand" href="#"><%= current_user.username %></a>
+      <ul class="nav">
+        <%= yield :nav %>
+      </ul>
+       <ul class="nav pull-right">
+      <li><%= link_to "Logout", destroy_user_session_path(), :method => :delete %></li>
+      </ul>
+  <% end %>
+    </div>
+</div>
+  
+<div class="container-fluid">
+<% if notice%>
+       <p class="alert alert-success"><%= notice %></p>
+<% end%>
+<% if alert%>
+       <p class="alert alert-error"><%= alert %></p>
+<% end%>
+  <div class="row">
+    <div class="span3">
+      <%= yield :sidebar %>
+    </div>
+    <div class="span9">
+      <%= yield %>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

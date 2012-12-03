@@ -1,8 +1,12 @@
 class PasswordsController < ApplicationController
+  layout "with_sidebar", :only => :index
+  
   # GET /passwords
   # GET /passwords.json
   def index
-    @passwords = Password.all
+    @passwords = Password.all_by_category(params[:category])
+    
+    @category = Category.find_by_id(params[:category])
 
     respond_to do |format|
       format.html # index.html.erb

@@ -1,6 +1,26 @@
-%h1 Listing passwords
+= content_for :sidebar do
+  %div#sidebar-nav
+    - if @category.nil?
+      %ul.nav.nav-tabs.nav-stacked
+        - Category.roots.each do |category|
+          %li
+            = link_to category.name, passwords_path(:category => category.id)
+    - else
+      %ul.nav.nav-tabs.nav-stacked
+        %li
+          %a{ :href => passwords_path(:category => @category.parent_id) }
+            %i.icon-chevron-left
+            Back
+        - @category.children.each do |category|
+          %li
+            = link_to category.name, passwords_path(:category => category.id)
 
-%table
+  
+
+- if @category
+  %h1= @category.name
+
+%table.table
   %tr
     %th Name
     %th Description
@@ -18,4 +38,4 @@
 
 %br
 
-= link_to 'New Password', new_password_path
+= link_to 'New Password', new_password_path(:category => params[:category]), :class => "btn"

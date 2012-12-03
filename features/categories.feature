@@ -7,19 +7,21 @@ Feature: Categories
     Given there are categories:
       | Name            | Parent          |
       | Parent category |                 |
-      | Child category  | Parent category |
+      | Child category  | Parent category |      
+    And I am authenticated as a "user"
   
   Scenario: Category list
     Given there is password "My password" with category "Parent category"
     And I am on page "passwords"
-    Then I should see "Parent category"
-    And I should see "My password"
+    When I click on a link "Parent category"
+    Then I should see "My password"
     
   Scenario: Subcategory
     Given there is password "My password" with category "Child category"
     And I am on page "passwords"
     When I click on a link "Parent category"
     Then I should not see "My password"
+    And I should see link "Child category"
     
   Scenario: Subcategory list
     Given there is password "My password" with category "Child category"
