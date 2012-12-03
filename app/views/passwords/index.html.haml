@@ -32,10 +32,20 @@
     %tr
       %td= password.name
       %td= password.description
-      %td= link_to 'Show', password
+      %td= link_to 'Show', password, {"class" => "btn", "role" => "button", "data-toggle"=>"modal", "data-target"=>"#secret_dialog"}
       %td= link_to 'Edit', edit_password_path(password)
       %td= link_to 'Destroy', password, method: :delete, data: { confirm: 'Are you sure?' }
 
 %br
 
 = link_to 'New Password', new_password_path(:category => params[:category]), :class => "btn"
+
+%div.modal.hide.fade#secret_dialog{"role" => "dialog"}
+  %div.modal-header
+    %a.close{"data-dismiss"=>"modal", "aria-hidden"=>"true"} x
+    %h3 Password
+  %div.modal-body
+  %div.modal-footer
+    %button.btn{"data-dismiss"=>"modal", "aria-hidden"=>"true"} Close
+
+    
