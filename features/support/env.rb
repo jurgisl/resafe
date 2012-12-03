@@ -69,12 +69,15 @@ require 'cucumber/rails'
   Cucumber::Rails::Database.javascript_strategy = :truncation
   
   Before do
-    load_schema = lambda {
-      load "#{Rails.root.to_s}/db/schema.rb" # use db agnostic schema by default
-      load "#{Rails.root.to_s}/db/seeds.rb"
-      # ActiveRecord::Migrator.up('db/migrate') # use migrations
-    }
-    silence_stream(STDOUT, &load_schema)
+    load_schema = lambda {  
+      # use db agnostic schema by default  
+      load "#{Rails.root.to_s}/db/schema.rb"   
+    
+      # if you use seeds uncomment next line  
+      # load "#{Rails.root.to_s}/db/seeds.rb"  
+      # ActiveRecord::Migrator.up('db/migrate') # use migrations  
+    }  
+    silence_stream(STDOUT, &load_schema) 
   end
 end
 

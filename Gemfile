@@ -7,6 +7,8 @@ gem 'less-rails-bootstrap'
 # Auhentication and authorization
 gem 'devise'
 gem 'cancan'
+# Tree structure
+gem 'ancestry'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 

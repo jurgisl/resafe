@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121128155920) do
+ActiveRecord::Schema.define(:version => 20121203074331) do
+
+  create_table "categories", :force => true do |t|
+    t.string   "name"
+    t.string   "ancestry"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "categories", ["ancestry"], :name => "index_categories_on_ancestry"
 
   create_table "groups", :force => true do |t|
     t.string "name"
@@ -21,6 +30,17 @@ ActiveRecord::Schema.define(:version => 20121128155920) do
     t.integer "group_id"
     t.integer "user_id"
   end
+
+  create_table "passwords", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "password"
+    t.integer  "category_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "passwords", ["category_id"], :name => "index_passwords_on_category_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",               :default => "", :null => false

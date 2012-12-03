@@ -1,9 +1,11 @@
 def url_of(page)
   case page
+    when "home"
+      return "/"
+    when "passwords"
+      return passwords_path()
     when "login"
       return "/users/login"
-    when "passwords"
-      return "/passwords"
     else
       throw "Page URL not found"
   end

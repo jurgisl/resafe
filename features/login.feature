@@ -8,5 +8,11 @@ Feature: Authenticate user
     And I am on page "login"
     When I enter username and password "user", "password"
     And press a button "Login"
-    Then I should be on page "passwords"
-    And I should see "You have successfully authenticated"
+    Then I should be on page "home"
+    And I should see "Signed in successfully"
+    
+  Scenario: User logout
+    Given I am authenticated as a "user"
+    And I am on page "home"
+    When I click on a link "Logout"
+    Then I should be on page "login"

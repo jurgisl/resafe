@@ -1,4 +1,7 @@
 %h2 Sign in
+
+=image_tag "safe.png"
+
 = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "form-horizontal"}) do |f|
   %div.control-group
     = f.label :username
@@ -15,3 +18,5 @@
   %div.control-group
     = f.submit "Login", :class => "btn btn-primary"
 
+%p.muted
+  %small * Safe icon by Visual Pharm
