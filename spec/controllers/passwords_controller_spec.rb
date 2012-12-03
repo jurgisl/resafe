@@ -80,6 +80,11 @@ describe PasswordsController do
       get :new, {}, valid_session
       assigns(:password).should be_a_new(Password)
     end
+    
+    it "sets default category to a password" do
+      get :new, {:category => 10}, valid_session
+      assigns(:password).category_id.should == 10
+    end
   end
 
   describe "GET edit" do
@@ -104,9 +109,11 @@ describe PasswordsController do
         assigns(:password).should be_persisted
       end
 
-      it "redirects to the passwords list" do
-        post :create, {:password => valid_attributes}, valid_session
-        response.should redirect_to(passwords_path)
+      it "redirects to the passwords lists correct category" do
+        attrs = valid_attributes
+        attrs[:category_id] = 10
+        post :create, {:password => attrs}, valid_session
+        response.should redirect_to(passwords_path(:category => 10))
       end
     end
 

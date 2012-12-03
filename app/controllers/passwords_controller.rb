@@ -29,6 +29,8 @@ class PasswordsController < ApplicationController
   # GET /passwords/new.json
   def new
     @password = Password.new
+    
+    @password.category_id = params[:category]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -48,7 +50,7 @@ class PasswordsController < ApplicationController
 
     respond_to do |format|
       if @password.save
-        format.html { redirect_to passwords_path, notice: 'Password was successfully created.' }
+        format.html { redirect_to passwords_path(:category => @password.category_id), notice: 'Password was successfully created.' }
         format.json { render json: @password, status: :created, location: @password }
       else
         format.html { render action: "new" }

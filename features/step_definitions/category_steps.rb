@@ -6,3 +6,7 @@ Given /^there are categories:$/ do |table|
     FactoryGirl.create :category, :name => category["Name"], :parent => parent
   end
 end
+
+Given /^there is a category "(.*?)"$/ do |name|
+  FactoryGirl.create :category, :name => name
+end
