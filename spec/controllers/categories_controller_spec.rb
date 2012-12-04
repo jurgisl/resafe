@@ -19,19 +19,26 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe CategoriesController do
+  before :each do
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    @user = FactoryGirl.create(:user)
+    sign_in @user
+  end
 
   # This should return the minimal set of attributes required to create a valid
   # Category. As you add validations to Category, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    {
+      :name => "Main category"
+    }
   end
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # CategoriesController. Be sure to keep this updated too.
   def valid_session
-    {}
+    nil
   end
 
   describe "GET index" do
@@ -54,6 +61,12 @@ describe CategoriesController do
     it "assigns a new category as @category" do
       get :new, {}, valid_session
       assigns(:category).should be_a_new(Category)
+    end
+    
+    it "sets parent category" do
+      category = FactoryGirl.create :category
+      get :new, {:parent => category.id}, valid_session
+      assigns(:category).parent_id.should == category.id
     end
   end
 
@@ -79,9 +92,9 @@ describe CategoriesController do
         assigns(:category).should be_persisted
       end
 
-      it "redirects to the created category" do
+      it "redirects to the created category passwords" do
         post :create, {:category => valid_attributes}, valid_session
-        response.should redirect_to(Category.last)
+        response.should redirect_to(passwords_path(:category => Category.last.id))
       end
     end
 

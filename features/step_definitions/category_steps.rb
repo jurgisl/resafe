@@ -10,3 +10,7 @@ end
 Given /^there is a category "(.*?)"$/ do |name|
   FactoryGirl.create :category, :name => name
 end
+
+Then /^I should see category form$/ do
+  page.should have_css "form.new_category"
+end

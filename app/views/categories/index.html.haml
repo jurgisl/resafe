@@ -1,9 +1,9 @@
-%h1 Listing categories
+%h1 Categories
 
-%table
+%table.table
   %tr
     %th Name
-    %th Ancestry
+    %th Parent
     %th
     %th
     %th
@@ -11,8 +11,8 @@
   - @categories.each do |category|
     %tr
       %td= category.name
-      %td= category.ancestry
-      %td= link_to 'Show', category
+      %td= category.parent.name
+      %td= link_to 'Show', passwords_path(:category => @category.id)
       %td= link_to 'Edit', edit_category_path(category)
       %td= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' }
 

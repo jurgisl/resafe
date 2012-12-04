@@ -21,3 +21,7 @@ end
 When /^I click on a link "(.*?)"$/ do |label|
   click_link label
 end
+
+Given /^I enter "(.*?)" in field "(.*?)"$/ do |value, field|
+  fill_in field, :with => value
+end

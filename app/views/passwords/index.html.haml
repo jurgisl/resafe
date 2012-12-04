@@ -39,6 +39,7 @@
 %br
 
 = link_to 'New Password', new_password_path(:category => params[:category]), :class => "btn"
+= link_to 'New Category', new_category_path(:parent => params[:category]), :class => "btn"
 
 %div.modal.hide.fade#secret_dialog{"role" => "dialog"}
   %div.modal-header
