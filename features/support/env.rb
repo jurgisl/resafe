@@ -69,6 +69,7 @@ require 'cucumber/rails'
   Cucumber::Rails::Database.javascript_strategy = :truncation
   
   Before do
+    ActiveRecord::Schema.verbose = false
     load_schema = lambda {  
       # use db agnostic schema by default  
       load "#{Rails.root.to_s}/db/schema.rb"   

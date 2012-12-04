@@ -1,12 +1,17 @@
 class PasswordsController < ApplicationController
   layout "with_sidebar", :only => :index
   
+  load_and_authorize_resource :password, :except => [:new, :index, :create]
+  skip_authorization_check :only => [:index]
+  
   # GET /passwords
   # GET /passwords.json
   def index
-    @passwords = Password.all_by_category(params[:category])
-    
     @category = Category.find_by_id(params[:category])
+    
+    authorize! :read, @category if @category
+    
+    @passwords = Password.all_by_category(params[:category])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -28,6 +33,10 @@ class PasswordsController < ApplicationController
   # GET /passwords/new
   # GET /passwords/new.json
   def new
+    @category = Category.find(params[:category])
+    
+    authorize! :read, @category
+    
     @password = Password.new
     
     @password.category_id = params[:category]
@@ -46,6 +55,10 @@ class PasswordsController < ApplicationController
   # POST /passwords
   # POST /passwords.json
   def create
+    @category = Category.find(params[:password][:category_id])
+    
+    authorize! :read, @category
+    
     @password = Password.new(params[:password])
 
     respond_to do |format|

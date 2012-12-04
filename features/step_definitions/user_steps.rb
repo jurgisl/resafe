@@ -7,10 +7,11 @@ When /^I enter username and password "(.*?)", "(.*?)"$/ do |username, password|
   fill_in "Password", :with => password
 end
 
-Given /^I am authenticated as a "(.*?)"$/ do |user|
-  username = user
+Given /^I am authenticated as a "(.*?)"$/ do |group|
+  username = "simpleuser"
   password = "123qwe"
-  FactoryGirl.create :user, :username => username, :password => password
+  user = FactoryGirl.create :user, :username => username, :password => password
+  user.groups = Group.where(:name => group)
   visit url_of "login"
   fill_in "Username", :with => username
   fill_in "Password", :with => password

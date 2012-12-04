@@ -17,6 +17,6 @@
     = f.text_field :password
   .field
     = f.label :category_id
-    = f.collection_select :category_id, Category.all, :id, :name
+    = f.collection_select :category_id, Category.accessible_by(current_ability), :id, :name
   .actions
     = f.submit 'Save'

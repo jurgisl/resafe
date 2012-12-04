@@ -17,3 +17,8 @@ end
 Given /^there is password "(.*?)" with secret "(.*?)"$/ do |name, secret|
   FactoryGirl.create :password, :name => name, :password => secret, :category => nil
 end
+
+When /^I am on a passwords category "(.*?)"$/ do |category_name|
+  category = Category.find_by_name category_name
+  visit url_of("passwords") + "?category=#{category.id}"
+end

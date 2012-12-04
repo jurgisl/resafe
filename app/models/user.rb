@@ -12,6 +12,6 @@ class User < ActiveRecord::Base
   # attr_accessible :title, :body
   
   def group?(group)
-    return !!self.group.find_by_name(group.to_s.camelize)
+    return !!self.groups.find_by_name(group.to_s.camelize)
   end
 end

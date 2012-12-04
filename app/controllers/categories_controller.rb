@@ -1,4 +1,8 @@
 class CategoriesController < ApplicationController
+  
+  load_and_authorize_resource :except => [:new, :create]
+  skip_authorization_check :only => [:new, :create]
+  
   # GET /categories
   # GET /categories.json
   def index
@@ -24,9 +28,14 @@ class CategoriesController < ApplicationController
   # GET /categories/new
   # GET /categories/new.json
   def new
+    @parent = Category.find_by_id(params[:parent])
+    
+    authorize! :read, @parent if @parent
+    
     @category = Category.new
     
     @category.parent_id = params[:parent]
+    @category.groups = current_user.groups
 
     respond_to do |format|
       format.html # new.html.erb

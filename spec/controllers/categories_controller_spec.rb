@@ -22,6 +22,8 @@ describe CategoriesController do
   before :each do
     @request.env["devise.mapping"] = Devise.mappings[:user]
     @user = FactoryGirl.create(:user)
+    @group = FactoryGirl.create(:group)
+    @user.groups = [@group]
     sign_in @user
   end
 
@@ -30,7 +32,8 @@ describe CategoriesController do
   # update the return value of this method accordingly.
   def valid_attributes
     {
-      :name => "Main category"
+      :name => "Main category",
+      :group_ids => [@group.id]
     }
   end
 
@@ -65,8 +68,14 @@ describe CategoriesController do
     
     it "sets parent category" do
       category = FactoryGirl.create :category
+      category.groups = [@group]
       get :new, {:parent => category.id}, valid_session
       assigns(:category).parent_id.should == category.id
+    end
+    
+    it "sets user groups to a category" do
+      get :new, {}, valid_session
+      assigns(:category).group_ids.should == [@group.id]
     end
   end
 

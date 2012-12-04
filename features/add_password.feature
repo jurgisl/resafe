@@ -4,15 +4,16 @@ Feature: Add password
   So that I can access it later
   
   Background:
-    Given I am authenticated as a "user"
+    Given I am authenticated as a "user"      
+    And there is a category "My passwords"
   
   Scenario: Add password form
-    Given I am on page "passwords"
+    Given I am on passwords category "My passwords"
     When I click on a link "New Password"
     Then I should see password form
   
   Scenario: Add password
-    Given I am on page "passwords"
+    Given I am on passwords category "My passwords"
     And I click on a link "New Password"
     When I enter password named "my password"
     And I press a button "Save"

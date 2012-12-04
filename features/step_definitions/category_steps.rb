@@ -14,3 +14,9 @@ end
 Then /^I should see category form$/ do
   page.should have_css "form.new_category"
 end
+
+Given /^category "(.*?)" is accessible by "(.*?)" group$/ do |category_name, group_name|
+  category = Category.find_by_name category_name
+  group = Group.find_by_name group_name
+  category.groups.push group
+end

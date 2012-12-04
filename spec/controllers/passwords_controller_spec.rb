@@ -22,7 +22,12 @@ describe PasswordsController do
   before :each do
     @request.env["devise.mapping"] = Devise.mappings[:user]
     @user = FactoryGirl.create(:user)
+    @group = FactoryGirl.create(:group)
+    @user.groups = [@group]
     sign_in @user
+    
+    @category = FactoryGirl.create :category
+    @category.groups = [@group]
   end
 
   # This should return the minimal set of attributes required to create a valid
@@ -32,7 +37,8 @@ describe PasswordsController do
     {
       :name => "My password",
       :description => "Some Description",
-      :password => "SomeSecret"
+      :password => "SomeSecret",
+      :category_id => @category.id
     }
   end
 
@@ -61,15 +67,14 @@ describe PasswordsController do
     end
     
     it "assigns category" do
-      category = FactoryGirl.create :category
-      get :index, {:category => category.id}, valid_session
-      assigns(:category).should eq(category)
+      get :index, {:category => @category.id}, valid_session
+      assigns(:category).should eq(@category)
     end
   end
 
   describe "GET show" do
     it "assigns the requested password as @password" do
-      password = FactoryGirl.create :password
+      password = FactoryGirl.create :password, :category => @category
       get :show, {:id => password.to_param}, valid_session
       assigns(:password).should eq(password)
     end
@@ -77,19 +82,19 @@ describe PasswordsController do
 
   describe "GET new" do
     it "assigns a new password as @password" do
-      get :new, {}, valid_session
+      get :new, {:category => @category.id}, valid_session
       assigns(:password).should be_a_new(Password)
     end
     
     it "sets default category to a password" do
-      get :new, {:category => 10}, valid_session
-      assigns(:password).category_id.should == 10
+      get :new, {:category => @category.id}, valid_session
+      assigns(:password).category_id.should == @category.id
     end
   end
 
   describe "GET edit" do
     it "assigns the requested password as @password" do
-      password = FactoryGirl.create :password
+      password = FactoryGirl.create :password, :category => @category
       get :edit, {:id => password.to_param}, valid_session
       assigns(:password).should eq(password)
     end
@@ -111,9 +116,9 @@ describe PasswordsController do
 
       it "redirects to the passwords lists correct category" do
         attrs = valid_attributes
-        attrs[:category_id] = 10
+        attrs[:category_id] = @category.id
         post :create, {:password => attrs}, valid_session
-        response.should redirect_to(passwords_path(:category => 10))
+        response.should redirect_to(passwords_path(:category => @category.id))
       end
     end
 
@@ -121,14 +126,14 @@ describe PasswordsController do
       it "assigns a newly created but unsaved password as @password" do
         # Trigger the behavior that occurs when invalid params are submitted
         Password.any_instance.stub(:save).and_return(false)
-        post :create, {:password => {}}, valid_session
+        post :create, {:password => { :category_id => @category.id }}, valid_session
         assigns(:password).should be_a_new(Password)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Password.any_instance.stub(:save).and_return(false)
-        post :create, {:password => {}}, valid_session
+        post :create, {:password => { :category_id => @category.id }}, valid_session
         response.should render_template("new")
       end
     end
@@ -137,7 +142,7 @@ describe PasswordsController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested password" do
-        password = FactoryGirl.create :password
+        password = FactoryGirl.create :password, :category => @category
         # Assuming there are no other passwords in the database, this
         # specifies that the Password created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -147,13 +152,13 @@ describe PasswordsController do
       end
 
       it "assigns the requested password as @password" do
-        password = FactoryGirl.create :password
+        password = FactoryGirl.create :password, :category => @category
         put :update, {:id => password.to_param, :password => valid_attributes}, valid_session
         assigns(:password).should eq(password)
       end
 
       it "redirects to the password" do
-        password = FactoryGirl.create :password
+        password = FactoryGirl.create :password, :category => @category
         put :update, {:id => password.to_param, :password => valid_attributes}, valid_session
         response.should redirect_to(password)
       end
@@ -161,7 +166,7 @@ describe PasswordsController do
 
     describe "with invalid params" do
       it "assigns the password as @password" do
-        password = FactoryGirl.create :password
+        password = FactoryGirl.create :password, :category => @category
         # Trigger the behavior that occurs when invalid params are submitted
         Password.any_instance.stub(:save).and_return(false)
         put :update, {:id => password.to_param, :password => {}}, valid_session
@@ -169,7 +174,7 @@ describe PasswordsController do
       end
 
       it "re-renders the 'edit' template" do
-        password = FactoryGirl.create :password
+        password = FactoryGirl.create :password, :category => @category
         # Trigger the behavior that occurs when invalid params are submitted
         Password.any_instance.stub(:save).and_return(false)
         put :update, {:id => password.to_param, :password => {}}, valid_session
@@ -180,14 +185,14 @@ describe PasswordsController do
 
   describe "DELETE destroy" do
     it "destroys the requested password" do
-      password = FactoryGirl.create :password
+      password = FactoryGirl.create :password, :category => @category
       expect {
         delete :destroy, {:id => password.to_param}, valid_session
       }.to change(Password, :count).by(-1)
     end
 
     it "redirects to the passwords list" do
-      password = FactoryGirl.create :password
+      password = FactoryGirl.create :password, :category => @category
       delete :destroy, {:id => password.to_param}, valid_session
       response.should redirect_to(passwords_url)
     end

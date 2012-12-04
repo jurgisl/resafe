@@ -2,7 +2,7 @@
   %div#sidebar-nav
     - if @category.nil?
       %ul.nav.nav-tabs.nav-stacked
-        - Category.roots.each do |category|
+        - Category.accessible_by(current_ability).roots.each do |category|
           %li
             = link_to category.name, passwords_path(:category => category.id)
     - else
@@ -11,7 +11,7 @@
           %a{ :href => passwords_path(:category => @category.parent_id) }
             %i.icon-chevron-left
             Back
-        - @category.children.each do |category|
+        - @category.children.accessible_by(current_ability).each do |category|
           %li
             = link_to category.name, passwords_path(:category => category.id)
 
@@ -38,7 +38,7 @@
 
 %br
 
-= link_to 'New Password', new_password_path(:category => params[:category]), :class => "btn"
+= link_to 'New Password', new_password_path(:category => params[:category]), :class => "btn" if @category
 = link_to 'New Category', new_category_path(:parent => params[:category]), :class => "btn"
 
 %div.modal.hide.fade#secret_dialog{"role" => "dialog"}

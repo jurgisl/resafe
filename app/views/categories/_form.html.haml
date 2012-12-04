@@ -11,6 +11,9 @@
     = f.text_field :name
   .field
     = f.label :parent_id
-    = f.collection_select :parent_id, Category.all.select { |x| x != @category.id }, :id, :name, :prompt => "Root"
+    = f.collection_select :parent_id, Category.accessible_by(current_ability).select { |x| x != @category.id }, :id, :name, :prompt => "Root"
+  .field
+    = f.label :group_ids, "Access"
+    = f.collection_select :group_ids, current_user.groups, :id, :name, {},:multiple => true
   .actions
     = f.submit 'Save'
