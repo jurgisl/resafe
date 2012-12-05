@@ -6,6 +6,10 @@ def url_of(page)
       return passwords_path()
     when "login"
       return "/users/login"
+    when "users administration"
+      return "/admin/users"
+    when "groups administration"
+      return "/admin/groups"
     else
       throw "Page URL not found"
   end

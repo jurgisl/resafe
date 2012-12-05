@@ -10,7 +10,7 @@ Feature: Add category
     
   Scenario: Add Category form
     When I click on a link "New Category"
-    Then I should see category form
+    Then I should see "new category" form
     
   Scenario: Add Category 
     Given I click on a link "New Category"

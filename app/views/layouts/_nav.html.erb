@@ -1,0 +1,13 @@
+<% if !controller.devise_controller? %>
+    <a class="brand" href="<%= edit_user_registration_path %>"><%= current_user.username %></a>
+    <ul class="nav">
+      <% if current_user.group? :administrator%>
+        <li><%= link_to "Users", admin_users_path%></li>
+        <li><%= link_to "Groups", admin_groups_path%></li>
+      <% end %>
+      <%= yield :nav %>
+    </ul>
+     <ul class="nav pull-right">
+    <li><%= link_to "Logout", destroy_user_session_path(), :method => :delete %></li>
+    </ul>
+<% end %>

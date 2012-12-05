@@ -12,7 +12,7 @@ Feature: Add password
   Scenario: Add password form
     Given I am on a passwords category "My passwords"
     When I click on a link "New Password"
-    Then I should see password form
+    Then I should see "new password" form
   
   Scenario: Add password
     Given I am on a passwords category "My passwords"

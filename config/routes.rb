@@ -5,12 +5,17 @@ Resafe::Application.routes.draw do
   root :to => "passwords#index"
   
   resources :passwords
-
-  resources :groups
-
-  devise_for :users, :path_names => { :sign_in => 'login', :sign_out => 'logout' }
   
-  resources :users
+  devise_for :users, :path_names => { :sign_in => 'login', :sign_out => 'logout' }, :skip => [:registrations]   
+  	as :user do
+      get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'    
+      put 'users' => 'devise/registrations#update', :as => 'user_registration'            
+    end
+    
+  namespace :admin do
+    resources :groups
+    resources :users
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

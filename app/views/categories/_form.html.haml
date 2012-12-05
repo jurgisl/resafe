@@ -16,4 +16,4 @@
     = f.label :group_ids, "Access"
     = f.collection_select :group_ids, current_user.groups, :id, :name, {},:multiple => true
   .actions
-    = f.submit 'Save'
+    = f.submit 'Save', :class => "btn"

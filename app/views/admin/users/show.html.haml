@@ -1,0 +1,20 @@
+%p#notice= notice
+%p
+  %b Username:
+  = @user.username
+%p
+  %b Email:
+  = @user.email
+%p
+  %b Last login:
+  = @user.last_sign_in_at.strftime('%d.%m.%Y %H:%M:%S') if !@user.last_sign_in_at.nil?
+%p
+  %b Last login IP:
+  = @user.last_sign_in_ip
+%p
+  %b Groups:
+  = @user.groups.collect {|x| x.name}.join(",")
+
+= link_to 'Edit', edit_admin_user_path(@user)
+\|
+= link_to 'Back', admin_users_path

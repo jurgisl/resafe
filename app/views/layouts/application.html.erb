@@ -10,15 +10,7 @@
   
 <div class="navbar navbar-static-top">
     <div class="navbar-inner">
-  <% if !controller.devise_controller? %>
-      <a class="brand" href="#"><%= current_user.username %></a>
-      <ul class="nav">
-        <%= yield :nav %>
-      </ul>
-       <ul class="nav pull-right">
-      <li><%= link_to "Logout", destroy_user_session_path(), :method => :delete %></li>
-      </ul>
-  <% end %>
+      <%= render 'layouts/nav' %>
     </div>
 </div>
   

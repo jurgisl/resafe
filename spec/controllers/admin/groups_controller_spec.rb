@@ -18,11 +18,11 @@ require 'spec_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe GroupsController do
+describe Admin::GroupsController do
   before :each do
     @request.env["devise.mapping"] = Devise.mappings[:user]
     @user = FactoryGirl.create(:user)
-    @group = FactoryGirl.create(:group, :name => :administrator)
+    @group = FactoryGirl.create(:group, :name => 'Administrator')
     @user.groups = [@group]
     sign_in @user
   end
@@ -31,7 +31,9 @@ describe GroupsController do
   # Group. As you add validations to Group, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {:name => :user}
+    {
+      :name => :user
+    }
   end
 
   # This should return the minimal set of values that should be in the session
@@ -88,7 +90,7 @@ describe GroupsController do
 
       it "redirects to the created group" do
         post :create, {:group => valid_attributes}, valid_session
-        response.should redirect_to(Group.last)
+        response.should redirect_to([:admin, Group.last])
       end
     end
 
@@ -130,7 +132,7 @@ describe GroupsController do
       it "redirects to the group" do
         group = Group.create! valid_attributes
         put :update, {:id => group.to_param, :group => valid_attributes}, valid_session
-        response.should redirect_to(group)
+        response.should redirect_to([:admin, group])
       end
     end
 
@@ -164,7 +166,7 @@ describe GroupsController do
     it "redirects to the groups list" do
       group = Group.create! valid_attributes
       delete :destroy, {:id => group.to_param}, valid_session
-      response.should redirect_to(groups_url)
+      response.should redirect_to(admin_groups_url)
     end
   end
 

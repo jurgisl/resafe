@@ -1,8 +1,4 @@
 
-Then /^I should see password form$/ do
-  page.should have_css "form.new_password"
-end
-
 When /^I enter password named "(.*?)"$/ do |name|
   fill_in "Name", :with => name
   fill_in "Description", :with => "Some password"

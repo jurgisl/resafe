@@ -19,4 +19,4 @@
     = f.label :category_id
     = f.collection_select :category_id, Category.accessible_by(current_ability), :id, :name
   .actions
-    = f.submit 'Save'
+    = f.submit 'Save', :class => "btn"
