@@ -14,8 +14,9 @@ Given /^there is password "(.*?)" with category "(.*?)"$/ do |name, category_nam
   FactoryGirl.create :password, :name => name, :category => category
 end
 
-Given /^there is password "(.*?)" with secret "(.*?)"$/ do |name, secret|
-  FactoryGirl.create :password, :name => name, :password => secret, :category => nil
+Given /^there is password "(.*?)" with secret "(.*?)" and category "(.*?)"$/ do |name, secret, category_name|
+  category = Category.find_by_name category_name
+  FactoryGirl.create :password, :name => name, :password => secret, :category => category
 end
 
 When /^I am on a passwords category "(.*?)"$/ do |category_name|

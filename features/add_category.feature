@@ -4,7 +4,8 @@ Feature: Add category
   So that I can organize my passwords, to find them faster and increase usability of the system
   
   Background:
-    Given I am authenticated as a "user"
+    Given there is a group "User"
+    And I am authenticated as a "User"  
     And I am on page "passwords"
     
   Scenario: Add Category form

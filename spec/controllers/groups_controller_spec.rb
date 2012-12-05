@@ -19,26 +19,33 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe GroupsController do
+  before :each do
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    @user = FactoryGirl.create(:user)
+    @group = FactoryGirl.create(:group, :name => :administrator)
+    @user.groups = [@group]
+    sign_in @user
+  end
 
   # This should return the minimal set of attributes required to create a valid
   # Group. As you add validations to Group, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    {:name => :user}
   end
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # GroupsController. Be sure to keep this updated too.
   def valid_session
-    {}
+    nil
   end
 
   describe "GET index" do
     it "assigns all groups as @groups" do
       group = Group.create! valid_attributes
       get :index, {}, valid_session
-      assigns(:groups).should eq([group])
+      assigns(:groups).should eq([@group,group])
     end
   end
 

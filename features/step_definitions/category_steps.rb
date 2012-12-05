@@ -1,9 +1,10 @@
 
 Given /^there are categories:$/ do |table|
   # table is a Cucumber::Ast::Table
-  table.hashes.each do |category|
-    parent = Category.find_by_name category["Parent"]
-    FactoryGirl.create :category, :name => category["Name"], :parent => parent
+  table.hashes.each do |row|
+    parent = Category.find_by_name row["Parent"]
+    category = FactoryGirl.create :category, :name => row["Name"], :parent => parent
+    category.groups = Group.where(:name => row["Groups"])
   end
 end
 

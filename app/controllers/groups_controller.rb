@@ -1,4 +1,6 @@
 class GroupsController < ApplicationController
+  skip_authorization_check
+  
   # GET /groups
   # GET /groups.json
   def index

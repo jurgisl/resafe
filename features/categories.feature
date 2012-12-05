@@ -4,11 +4,12 @@ Feature: Categories
   So that I can find them easly
   
   Background:
-    Given there are categories:
-      | Name            | Parent          |
-      | Parent category |                 |
-      | Child category  | Parent category |      
-    And I am authenticated as a "user"
+    Given there is a group "User"
+    And there are categories:
+      | Name            | Parent          | Groups |
+      | Parent category |                 | User   |
+      | Child category  | Parent category | User   |
+    And I am authenticated as a "User"
   
   Scenario: Category list
     Given there is password "My password" with category "Parent category"
