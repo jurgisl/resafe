@@ -46,13 +46,15 @@ Spork.prefork do
 end
 
 Spork.each_run do
-  # This code will be run each time you run your specs.
-  ActiveRecord::Schema.verbose = false
-  load_schema = lambda {  
-    load "#{Rails.root.to_s}/db/schema.rb" # use db agnostic schema by default  
-    # ActiveRecord::Migrator.up('db/migrate') # use migrations  
-  }  
-  silence_stream(STDOUT, &load_schema) 
+  if Rails.configuration.database_configuration['test']['database'] == ':memory:'
+    # This code will be run each time you run your specs.
+    ActiveRecord::Schema.verbose = false
+    load_schema = lambda {  
+      load "#{Rails.root.to_s}/db/schema.rb" # use db agnostic schema by default  
+      # ActiveRecord::Migrator.up('db/migrate') # use migrations  
+    }  
+    silence_stream(STDOUT, &load_schema) 
+  end
 end
 
 # --- Instructions ---
