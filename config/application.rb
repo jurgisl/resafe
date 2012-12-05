@@ -68,5 +68,7 @@ module Resafe
     
     # For Heroku on Devise sugesstion
     config.assets.initialize_on_precompile = false
+    
+    config.assets.precompile += ['passwords.css']
   end
 end
