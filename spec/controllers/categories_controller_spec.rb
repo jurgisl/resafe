@@ -142,10 +142,10 @@ describe CategoriesController do
         assigns(:category).should eq(category)
       end
 
-      it "redirects to the category" do
+      it "redirects to the passwords" do
         category = Category.create! valid_attributes
         put :update, {:id => category.to_param, :category => valid_attributes}, valid_session
-        response.should redirect_to(category)
+        response.should redirect_to(passwords_path(:category => category.id))
       end
     end
 

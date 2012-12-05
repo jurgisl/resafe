@@ -11,8 +11,8 @@
   - @categories.each do |category|
     %tr
       %td= category.name
-      %td= category.parent.name
-      %td= link_to 'Show', passwords_path(:category => @category.id)
+      %td= category.parent.name if category.parent
+      %td= link_to 'Show', passwords_path(:category => category.id)
       %td= link_to 'Edit', edit_category_path(category)
       %td= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' }
 

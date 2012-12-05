@@ -2,4 +2,6 @@
 
 = render 'form'
 
+= link_to 'Destroy', @category, method: :delete, data: { confirm: 'Are you sure?' }
+
 = link_to 'Back', passwords_path(:category => @category.id)

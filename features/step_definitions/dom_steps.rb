@@ -36,6 +36,8 @@ Then /^(?:|I )should see "(.*?)" form$/ do |form_name|
     page.should have_css "form.new_password"
   when "new category"
     page.should have_css "form.new_category"
+  when "edit category"
+    page.should have_css "form.edit_category"
   when "new user"
     page.should have_css "form.new_user"
   when "new group"

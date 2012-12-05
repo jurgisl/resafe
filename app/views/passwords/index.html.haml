@@ -18,7 +18,10 @@
   
 
 - if @category
-  %h1= @category.name
+  %div.page-header
+    %h3
+      = @category.name
+      %small= link_to "Edit category", edit_category_path(@category)
 
 %table.table
   %tr

@@ -5,7 +5,7 @@ Feature: Access rights to user groups
   
   Background:
     Given there is a group "User"
-    And there is a group "Admin"      
+    And there is a group "Admin"
     And there is a category "Secure"
     And category "Secure" is accessible by "Admin" group
     And there is password "Gmail" with category "Secure"
