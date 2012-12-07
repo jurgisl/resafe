@@ -4,7 +4,11 @@ Resafe::Application.routes.draw do
 
   root :to => "passwords#index"
   
-  resources :passwords
+  resources :passwords do
+    collection do
+      get :search
+    end
+  end
   
   devise_for :users, :path_names => { :sign_in => 'login', :sign_out => 'logout' }, :skip => [:registrations]   
   	as :user do

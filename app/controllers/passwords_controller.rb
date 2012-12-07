@@ -1,8 +1,22 @@
 class PasswordsController < ApplicationController
   layout "with_sidebar", :only => :index
   
-  load_and_authorize_resource :password, :except => [:new, :index, :create]
-  skip_authorization_check :only => [:index]
+  load_and_authorize_resource :password, :except => [:new, :index, :create, :search]
+  skip_authorization_check :only => [:index, :search]
+  
+  def search
+    @passwords = []
+    Password.search(params[:keywords].to_s).accessible_by(current_ability).each do |password|
+      @passwords.push ({
+        :url => password_path(password),
+        :name => password.name
+      })
+    end
+    
+    respond_to do |format|
+      format.json { render json: @passwords }
+    end
+  end
   
   # GET /passwords
   # GET /passwords.json

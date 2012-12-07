@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121204105115) do
+ActiveRecord::Schema.define(:version => 20121206094733) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -34,6 +34,19 @@ ActiveRecord::Schema.define(:version => 20121204105115) do
   create_table "groups_users", :id => false, :force => true do |t|
     t.integer "group_id"
     t.integer "user_id"
+  end
+
+  create_table "keywords", :force => true do |t|
+    t.string   "keyword"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "keywords", ["keyword"], :name => "index_keywords_on_keyword"
+
+  create_table "keywords_passwords", :id => false, :force => true do |t|
+    t.integer "keyword_id"
+    t.integer "password_id"
   end
 
   create_table "passwords", :force => true do |t|

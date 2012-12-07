@@ -31,6 +31,7 @@ end
 
 group :test do
   gem 'cucumber-rails', :require => false
+  gem "capybara-webkit", "~> 0.12.1"
   gem 'database_cleaner'
   gem 'sqlite3'
   gem 'pg'

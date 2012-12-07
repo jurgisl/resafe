@@ -48,6 +48,16 @@ describe PasswordsController do
   def valid_session
     nil
   end
+  
+  describe "GET search" do
+    it "returns passwords by keyword in JSON" do
+      category = FactoryGirl.create :category
+      category.groups = [@group]
+      password = FactoryGirl.create :password, :name => "password", :category => category
+      get :search, :format => :json, :keywords => "password"
+      response.body.should == [{:url => password_path(password), :name => password.name}].to_json
+    end
+  end
 
   describe "GET index" do
     it "renders with sidebar" do
