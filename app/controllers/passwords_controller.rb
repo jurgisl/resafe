@@ -6,11 +6,14 @@ class PasswordsController < ApplicationController
   
   def search
     @passwords = []
-    Password.search(params[:keywords].to_s).accessible_by(current_ability).each do |password|
-      @passwords.push ({
-        :url => password_path(password),
-        :name => password.name
-      })
+    
+    if params[:keywords].to_s.length > 2 then
+      Password.search(params[:keywords].to_s).accessible_by(current_ability).limit(10).each do |password|
+        @passwords.push ({
+          :url => password_path(password),
+          :name => password.name
+        })
+      end
     end
     
     respond_to do |format|

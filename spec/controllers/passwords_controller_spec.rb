@@ -57,6 +57,20 @@ describe PasswordsController do
       get :search, :format => :json, :keywords => "password"
       response.body.should == [{:url => password_path(password), :name => password.name}].to_json
     end
+    
+    it "limits to 10 passwords" do
+      result = []
+      result.stub(:accessible_by).and_return(result)
+      Password.stub(:search).and_return(result)
+      result.should_receive(:limit).with(10).and_return([])
+      get :search, :format => :json, :keywords => "password"
+    end
+    
+    it "returns empty array if keyword is less than 2 characters" do
+      password = FactoryGirl.create :password, :name => "password", :category => @category
+      get :search, :format => :json, :keywords => "p"
+      response.body.should == [].to_json
+    end
   end
 
   describe "GET index" do
