@@ -93,7 +93,7 @@ class PasswordsController < ApplicationController
 
     respond_to do |format|
       if @password.update_attributes(params[:password])
-        format.html { redirect_to @password, notice: 'Password was successfully updated.' }
+        format.html { redirect_to passwords_path(:category => @password.category_id), notice: 'Password was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

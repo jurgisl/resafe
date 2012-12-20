@@ -167,10 +167,10 @@ describe PasswordsController do
         assigns(:password).should eq(password)
       end
 
-      it "redirects to the password" do
+      it "redirects to the password lists correct category" do
         password = FactoryGirl.create :password, :category => @category
         put :update, {:id => password.to_param, :password => valid_attributes}, valid_session
-        response.should redirect_to(password)
+        response.should redirect_to(passwords_path(:category => @category.id))
       end
     end
 
