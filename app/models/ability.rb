@@ -6,7 +6,9 @@ class Ability
     if user.group? :administrator
       can :manage, :all
     else
-      can :manage, Password, :category => { :groups => { :id => user.group_ids} }
+      can :manage, Password, Password.joins(:category => :groups).where('groups.id' =>  user.group_ids ) do |password|
+		!password.category.groups.empty?
+      end
       can :manage, Category, :groups => { :id => user.group_ids }
     end
     

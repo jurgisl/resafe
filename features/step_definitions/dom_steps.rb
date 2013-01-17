@@ -18,7 +18,7 @@ Then /^(?:|I )should (not )?see link "(.*?)"$/ do |no, text|
   end
 end
 
-When /^(?:|I )click on a link "(.*?)"$/ do |label|
+When /^(?:|I )click on a link "([^\"]*?)"$/ do |label|
   click_link label
 end
 
@@ -45,4 +45,8 @@ Then /^(?:|I )should see "(.*?)" form$/ do |form_name|
   else
     throw "Unknown form"
   end
+end
+
+When /^(?:|I )close the popup$/ do
+  find('.modal .modal-footer .btn').click()
 end

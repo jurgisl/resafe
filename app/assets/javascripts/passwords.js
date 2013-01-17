@@ -47,4 +47,8 @@ function searchPasswords() {
 
 jQuery(function($){
   $('#search-box').keyup(searchPasswords);
+  
+  $('.modal').on('hidden', function() {
+    $(this).data('modal').$element.removeData();
+  });
 });

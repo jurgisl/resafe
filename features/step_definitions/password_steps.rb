@@ -19,3 +19,8 @@ When /^I am on a passwords category "(.*?)"$/ do |category_name|
   category = Category.find_by_name category_name
   visit url_of("passwords") + "?category=#{category.id}"
 end
+
+When /^(?:|I )click on a link "(.*?)" for password "(.*?)"$/ do |label, password|
+  row = find('.table tr', :text => password)
+  row.find('a', :text => label).click
+end
