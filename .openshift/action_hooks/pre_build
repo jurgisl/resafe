@@ -1,0 +1,1 @@
+mv ${OPENSHIFT_REPO_DIR}/config/database_prod.yml ${OPENSHIFT_REPO_DIR}/config/database.yml
