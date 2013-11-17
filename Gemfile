@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.11'
 
 gem 'therubyracer'
-gem 'less-rails-bootstrap'
+gem 'less-rails-bootstrap', github: 'metaskills/less-rails-bootstrap', ref: 'cbe20d4593e21297f7bc3bc6bc6471a7ad18e890'
 # Auhentication and authorization
 gem 'devise'
 gem 'cancan'
