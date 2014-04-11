@@ -22,6 +22,8 @@
     %h3
       = @category.name
       %small= link_to "Edit category", edit_category_path(@category)
+= link_to 'New Password', new_password_path(:category => params[:category]), :class => "btn" if @category
+= link_to 'New Category', new_category_path(:parent => params[:category]), :class => "btn"
 
 %table.table
   %tr
@@ -41,8 +43,6 @@
 
 %br
 
-= link_to 'New Password', new_password_path(:category => params[:category]), :class => "btn" if @category
-= link_to 'New Category', new_category_path(:parent => params[:category]), :class => "btn"
 
 %div.modal.hide.fade#secret_dialog{"role" => "dialog"}
   %div.modal-header
